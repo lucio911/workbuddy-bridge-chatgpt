@@ -1,5 +1,7 @@
 # workbuddy-bridge-chatgpt
 
+> 项目地址：https://github.com/lucio911/workbuddy-bridge-chatgpt
+
 > **ChatGPT 出方案，WorkBuddy 验证并执行。**
 
 `workbuddy-bridge-chatgpt`（命令别名 `wbc`）是一个**自包含的 Node 包 + WorkBuddy Skill 封装**，把 WorkBuddy 的高成本推理任务（复杂调试/根因、架构权衡、代码审查、技术调研）卸载给**已登录的 ChatGPT Web 会话**。
