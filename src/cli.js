@@ -4,7 +4,7 @@ import { runDoctor, formatDoctor } from './doctor.js';
 import { getConsent, setConsent, DISCLOSURE, CONSENT_VERSION } from './consent.js';
 import { collectEvidence } from './evidence.js';
 import { buildPacket, sanitizePacket, validatePacket, toPrompt } from './packet.js';
-import { askChatGPT } from './web-client.js';
+import { askChatGPT, loginFlow } from './web-client.js';
 import { parseResult, validateResult } from './result.js';
 import { buildAdoptionPlan, assertUntrusted, PRINCIPLE } from './adoption-gate.js';
 import { makeReceipt } from './receipt.js';
@@ -166,6 +166,22 @@ async function cmdAsk(flags) {
   console.log(JSON.stringify(final, null, 2));
 }
 
+async function cmdLogin() {
+  const doctor = runDoctor();
+  const browserCheck = doctor.checks.find((c) => c.name === 'browser');
+  if (!browserCheck || !browserCheck.ok) {
+    console.error('未找到系统浏览器（Edge 或 Chrome）。请先安装浏览器或设置 EDGE_PATH / CHROME_PATH。');
+    process.exit(1);
+  }
+  try {
+    const r = await loginFlow({ timeoutMs: 600000 });
+    out(r);
+  } catch (e) {
+    console.error(String(e.message || e));
+    process.exit(5);
+  }
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const cmd = args._[0];
@@ -183,6 +199,8 @@ async function main() {
       return cmdConsent(args._[1]);
     case 'validate':
       return cmdValidate();
+    case 'login':
+      return cmdLogin();
     case 'ask':
       return cmdAsk(flags);
     default:
@@ -191,6 +209,7 @@ async function main() {
   wbc doctor [--json]                      预检环境
   wbc consent [enable|disable|status]     风险同意管理
   wbc validate                            自检契约管线
+  wbc login                               打开浏览器登录 ChatGPT（仅首次/重新登录需要）
   wbc ask --task "<任务>" [--files a,b] [--test "<cmd>"] [--mode temporary|saved] [--dry-run] [--json]
 `);
       process.exit(cmd ? 2 : 0);
