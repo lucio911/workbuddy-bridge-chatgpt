@@ -1,0 +1,12 @@
+# dependencies
+node_modules/
+
+# local runtime state (NEVER commit)
+.workbuddy-bridge/browser-profile/
+.workbuddy-bridge/receipts/
+.workbuddy-bridge/debug/
+.workbuddy-bridge/config.json
+
+# logs
+*.log
+.DS_Store

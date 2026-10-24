@@ -1,0 +1,30 @@
+{
+  "name": "workbuddy-bridge-chatgpt",
+  "version": "0.1.0",
+  "description": "Bridge WorkBuddy to ChatGPT Web for high-cost reasoning offload — no API key, no backend service, no browser extension. ChatGPT proposes; WorkBuddy verifies and executes.",
+  "type": "module",
+  "bin": {
+    "wbc": "src/cli.js"
+  },
+  "main": "src/cli.js",
+  "files": [
+    "src",
+    "skills",
+    "docs",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test",
+    "doctor": "node src/cli.js doctor",
+    "validate": "node src/cli.js validate",
+    "ask": "node src/cli.js ask"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright-core": "^1.40.0"
+  },
+  "license": "MIT"
+}
