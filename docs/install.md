@@ -36,12 +36,14 @@ node src/cli.js consent enable    # 展示披露说明并授权
 node src/cli.js consent disable   # 随时撤销
 ```
 
-## 5. 登录一次
+## 5. 登录一次（专用 login 命令）
 ```bash
-node src/cli.js ask --task "Smoke test: reply with pong" --json
+node src/cli.js login
 ```
-首次会打开浏览器（Edge 或 Chrome）并跳到登录页，请手动登录。登录态保存在
-`.workbuddy-bridge/browser-profile/`，后续复用，请勿分享或提交。
+打开浏览器并保持打开，直到你在窗口中手动登录成功（窗口不会一闪而过）。
+登录态保存在 `.workbuddy-bridge/browser-profile/`，后续 `ask` 直接复用，请勿分享或提交。
+> 说明：日常提问请用 `ask`；首次或 session 过期才用 `login`。即便直接用 `ask` 未登录，
+> 现在也会挂起等待登录（不再闪退），但 `login` 职责更清晰、打开的是主站（非临时对话），更稳。
 
 ## 6. 在 WorkBuddy 中使用
 将 `skills/workbuddy-bridge-chatgpt/` 安装为 WorkBuddy Skill（放入
