@@ -1,6 +1,6 @@
 {
   "name": "workbuddy-bridge-chatgpt",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Bridge WorkBuddy to ChatGPT Web for high-cost reasoning offload — no API key, no backend service, no browser extension. ChatGPT proposes; WorkBuddy verifies and executes.",
   "type": "module",
   "bin": {
