@@ -42,8 +42,14 @@ while WorkBuddy keeps full authority over repository facts, file edits, and comm
 > All `node` commands below resolve the CLI via `WBC_PKG` (defaults to the installed Skill
 > directory). If you moved the package, set `WBC_PKG=/path/to/workbuddy-bridge-chatgpt` first.
 1. **Invoke** — user requests or you decide to consult ChatGPT.
-2. **Doctor** — run `node "${WBC_PKG:-/c/Users/Administrator/.workbuddy/skills/workbuddy-bridge-chatgpt}/src/cli.js" doctor --json`. If it reports `ACTION REQUIRED`,
-   surface the failing checks to the user (especially `browser` and `risk_consent`).
+2. **Doctor & login** — run `node "${WBC_PKG:-/c/Users/Administrator/.workbuddy/skills/workbuddy-bridge-chatgpt}/src/cli.js" doctor --json`.
+   - If it reports `ACTION REQUIRED`, surface the failing checks (especially `browser` and `risk_consent`).
+   - If `chatgpt_login` is **not** ok (first run, or session expired): tell the user to run
+     `node "${WBC_PKG:-/c/Users/Administrator/.workbuddy/skills/workbuddy-bridge-chatgpt}/src/cli.js" login`.
+     This opens the browser and waits — **the login window stays open until login succeeds and will NOT flash and close**.
+     Wait for the user to confirm login before continuing. Do **not** run `ask` before login is confirmed;
+     doing so previously caused the login window to flash and close (the browser closed while waiting for a
+     textarea that only appears after login).
 3. **Risk consent** — if `risk_consent` is not enabled, show the disclosure and ask the user to
    run `node "${WBC_PKG:-/c/Users/Administrator/.workbuddy/skills/workbuddy-bridge-chatgpt}/src/cli.js" consent enable` (or ask them to approve). Do not proceed without consent.
 4. **Collect evidence locally** — gather git status/diff/log, relevant file excerpts, test output.
