@@ -9,7 +9,7 @@ import { parseResult, validateResult } from './result.js';
 import { buildAdoptionPlan, assertUntrusted, PRINCIPLE } from './adoption-gate.js';
 import { makeReceipt } from './receipt.js';
 
-const VERSION = '0.1.0';
+const VERSION = '1.0.1';
 
 function parseArgs(argv) {
   const args = { _: [], flags: {} };
