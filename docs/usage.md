@@ -37,9 +37,11 @@ node src/cli.js doctor
 # 4. 风险同意（首次必做，展示披露说明并授权）
 node src/cli.js consent enable
 
-# 5. 登录一次（首次会打开 Edge 并跳到登录页，请手动登录）
-node src/cli.js ask --task "Smoke test: reply with the single word pong" --json
-#   登录态保存在 .workbuddy-bridge/browser-profile/，后续复用，已加入 .gitignore，勿分享/提交。
+# 5. 登录一次（首次/重新登录请用专用命令；窗口会保持打开直到登录成功，不再一闪而过）
+node src/cli.js login
+#   浏览器打开并保持打开，直到你在窗口中手动登录；登录成功后窗口关闭。
+#   登录态保存在 .workbuddy-bridge/browser-profile/，后续 ask 直接复用，已加入 .gitignore，勿分享/提交。
+#   说明：现在即使直接用 ask 且未登录，也会挂起等待登录（已修复闪退），但 login 职责更清晰、打开的是主站。
 ```
 
 ---
@@ -51,6 +53,7 @@ node src/cli.js ask --task "Smoke test: reply with the single word pong" --json
 | `node src/cli.js doctor [--json]` | 预检环境（Node / playwright-core / 浏览器 / 登录态 / 同意态） |
 | `node src/cli.js consent [enable\|disable\|status]` | 风险同意管理 |
 | `node src/cli.js validate` | 自检契约管线（构造空 Packet 并校验） |
+| `node src/cli.js login` | 打开浏览器登录 ChatGPT（仅首次/重新登录需要；窗口保持打开直到登录成功） |
 | `node src/cli.js ask --task "<任务>" [选项]` | 走完整流程：证据→上下文包→Web 推理→解析→采纳门→收据 |
 
 `ask` 的可选参数：
@@ -192,6 +195,7 @@ node src/cli.js ask \
 ```bash
 node src/cli.js doctor                 # 预检
 node src/cli.js consent enable         # 授权
+node src/cli.js login                  # 首次登录（窗口保持打开直到登录成功）
 node src/cli.js ask --task "..." --dry-run --json   # 先看发送内容
 node src/cli.js ask --task "..." --files a.js --test "npm test" --json   # 正式跑
 node src/cli.js validate               # 自检契约
